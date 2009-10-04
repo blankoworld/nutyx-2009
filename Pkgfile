@@ -1,0 +1,15 @@
+# Description: 
+# URL: 
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+# Depends on: 
+
+name=
+version=
+release=1
+group=
+source=()
+
+build() {
+}
+
