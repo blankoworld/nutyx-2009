@@ -1,0 +1,21 @@
+# Description: Analyseur SGML pour traduire des documents SGML dans d'autres
+# formats 
+# URL: 
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+# Depends on: gcc, autoconf
+
+name=openjade
+version=1.5.2
+release=1
+group=util
+realname=OpenSP
+source=( http://downloads.sourceforge.net/project/$name/opensp/$version/$realname-$version.tar.gz )
+
+build() {
+  cd $realname-$version
+  ./configure --prefix=/usr --disable-doc-build
+  make
+  make DESTDIR=$PKG install
+}
+
