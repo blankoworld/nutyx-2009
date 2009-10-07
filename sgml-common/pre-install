@@ -1,17 +1,7 @@
 #!/bin/sh
 
-## Verification existence sgml-ent.cat
-# Si oui, suppression
-if [ -e /etc/sgml/sgml-ent.cat ]
-then
-  install-catalog --remove /etc/sgml/sgml-ent.cat \
+install-catalog --remove /etc/sgml/sgml-ent.cat \
     /usr/share/sgml/sgml-iso-entities-8879.1986/catalog
-fi
-
-## Idem pour sgml-docbook.cat
-if [ -e /etc/sgml/sgml-docbook.cat ]
-then
-  install-catalog --remove /etc/sgml/sgml-docbook.cat \
+install-catalog --remove /etc/sgml/sgml-docbook.cat \
     /etc/sgml/sgml-ent.cat
-fi
 
