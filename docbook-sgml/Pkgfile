@@ -1,0 +1,22 @@
+# Description: Contient des définitions type pour les documents afin de\
+# vérifier les fichiers au formaSGM
+# URL: http://www.docbook.org/sgml/4.5/
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+# Depends on: sgml-common unzip
+
+name=docbook-sgml
+version=4.5
+release=1
+realname=docbook
+source=( http://www.docbook.org/sgml/$version/$realname-$version.zip )
+
+build() {
+  sed -i -e '/ISO 8879/d' \
+    -e '/gml/d' docbook.cat
+  install -v -d $PKG/usr/share/sgml/docbook/sgml-dtd-4.5
+  chown -R root:root .
+  install -v docbook.cat $PKG/usr/share/sgml/docbook/sgml-dtd-4.5/catalog
+  cp -v -af *.dtd *.mod *.dcl $PKG/usr/share/sgml/docbook/sgml-dtd-4.5
+}
+
