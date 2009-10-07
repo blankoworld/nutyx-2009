@@ -1,0 +1,21 @@
+# Description: Outil de création et maintenance de catalogues SGML 
+# URL: http://gd.tuwien.ac.at/hci/kde/devel/docbook/SOURCES/
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+
+name=sgml-common
+version=0.6.3
+release=1
+group=util
+source=( http://gd.tuwien.ac.at/hci/kde/devel/docbook/SOURCES/$name-$version.tgz \
+http://www.linuxfromscratch.org/patches/blfs/6.3/$name-$version-manpage-1.patch )
+
+build() {
+  cd $name-$version
+  patch -Np1 -i ../$name-$version-manpage-1.patch
+  autoreconf -f -i
+  ./configure --prefix=/usr --sysconfdir=/etc
+  make
+  make DESTDIR=$PKG install
+}
+
