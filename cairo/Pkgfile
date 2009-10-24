@@ -2,6 +2,7 @@
 # URL: http://www.cairographics.org/
 # Maintainer: NuTyX core team
 # Packager: thierryn1 at hispeed dot ch
+# Maintainer: Blankoworld <blankoworld at wanadoo dot fr>
 # Depends on: xorg, glitz, libpng, xorg-xcb-util
 
 name=cairo
