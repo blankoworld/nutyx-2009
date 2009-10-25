@@ -1,0 +1,39 @@
+# Description: Gestionnaire de fenêtre rapide, léger et dynamique pour X
+# URL: http://awesome.naquadah.org/
+# Packager:  Bartlomiej Palmowski <rotwang at crux dot org dot pl>
+# Maintainer: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: cmake gperf glib lua cairo pango imlib2 libev dbus imagemagick libxdg-basedir xorg-xcb-util startup-notification graphviz
+
+name=awesome
+version=3.3.2
+release=1
+source=( http://$name.naquadah.org/download/$name-$version.tar.bz2 \
+$name-client.1 \
+$name.1 \
+awsetbg.1 \
+${name}rc.5 )
+
+build() {
+  mkdir -p $PKG/usr/man/man{1,5}
+  cp $name{,-client}.1 awsetbg.1 $PKG/usr/man/man1
+  cp ${name}rc.5 $PKG/usr/man/man5
+
+  cd $name-$version
+  # quick and ugly hack to pass libev nonstandard headers dir to compiler
+  # see contrib/libev Pkgfile for details
+  sed -i '/\${AWESOME_OPTIONAL_INCLUDE_DIRS})$/s/)$/ ${LIBEV_INCLUDE_DIRS})/' \
+    CMakeLists.txt
+  # remove warnings on redundand declarations and undefined identifier stuff
+  # so we doesn't get shitloads of warnings from ev.h
+  sed -i -e 's/-Wredundant-decls//' \
+    -e 's/-Wundef//' awesomeConfig.cmake
+  cmake . -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DAWESOME_MAN_PATH=/usr/man \
+  	-DGENERATE_MANPAGES=OFF \
+    -DLIBEV_INCLUDE_DIRS=/usr/include/libev
+  make
+  make DESTDIR=$PKG install
+
+  rm -rf $PKG/usr/share/doc/
+}
