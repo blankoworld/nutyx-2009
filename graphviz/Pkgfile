@@ -1,0 +1,40 @@
+# Description: Logiciel de visualisation de graphe
+# URL: http://www.graphviz.org/
+# Packager: Andreas Baumann  <abaumann at yahoo dot com>
+# Maintainer: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: libpng, libjpeg, zlib, freetype, libgd
+# Version la plus minimale qui soit
+
+name=graphviz
+version=2.12
+release=1
+source=( http://www.graphviz.org/pub/graphviz/ARCHIVE/$name-$version.tar.gz )
+
+build () {
+  cd $name-$version
+  ./configure --prefix=/usr \
+    --without-x --without-libgd --with-libpng \
+    --with-pngincludedir=/usr/include --with-pnglibdir=/usr/lib \
+    --disable-swig \
+    --disable-sharp \
+    --disable-guile \
+    --disable-io \
+    --disable-java \
+    --disable-lua \
+    --disable-ocaml \
+    --disable-perl \
+    --disable-php \
+    --disable-python \
+    --disable-ruby \
+    --disable-tcl \
+    --disable-rpath
+  make
+  make install DESTDIR=$PKG
+
+  # pas de code de démo, ni de documentation
+  rm -rf $PKG/usr/share/graphviz/demo \
+  $PKG/usr/man/mann/ $PKG/usr/share/graphviz/doc
+
+  chown -R root:root $PKG
+}
+
