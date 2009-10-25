@@ -1,7 +1,7 @@
 # Description: Modèle d'évènement à haute performance, etc.
 # URL: http://software.schmorp.de/pkg/libev
-# Packager: Bartlomiej Palmowski, rotwang at crux dot org dot pl
-# Packager: Younes Hafri <ycrux@club-internet.fr>
+# Packager: Bartlomiej Palmowski <rotwang at crux dot org dot pl>
+# Maintainer: Younes Hafri <ycrux@club-internet.fr>
 
 name=libev
 version=3.7
