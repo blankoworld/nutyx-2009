@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ln -s -v /usr/lib/libgvc.so.5.0.0 /usr/lib/libgvc.so.4
+
