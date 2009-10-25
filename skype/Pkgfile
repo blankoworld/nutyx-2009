@@ -2,7 +2,7 @@
 # URL: http://skype.com/
 # Maintainer: Blankoworld
 # Packager: blankoworld at wanadoo dot fr
-# Depends on: qt4
+# Depends on: qt
 
 name=skype_static
 version=2.1.0.47
