@@ -6,7 +6,7 @@
 # Version la plus minimale qui soit
 
 name=graphviz
-version=2.12
+version=2.24.0
 release=1
 source=( http://www.graphviz.org/pub/graphviz/ARCHIVE/$name-$version.tar.gz )
 
