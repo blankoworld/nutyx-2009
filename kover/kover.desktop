@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Kover
-Comment=Outil de création de jaquette pour CD et DVD
+Comment=Outil de création de jaquettes pour CD et DVD
 Exec=/usr/local/bin/kover
 Icon=kover
 Terminal=false
