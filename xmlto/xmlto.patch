@@ -1,0 +1,12 @@
+diff -ruN xmlto-0.0.21.orig/xmlto.in xmlto-0.0.21/xmlto.in
+--- xmlto-0.0.21.orig/xmlto.in	2008-05-30 15:41:31.000000000 +0200
++++ xmlto-0.0.21/xmlto.in	2009-10-05 01:44:06.000000000 +0200
+@@ -178,7 +178,7 @@
+ export VERBOSE
+
+ # Disable network entities
+-XSLTOPTS="$XSLTOPTS --nonet"
++#XSLTOPTS="$XSLTOPTS --nonet"
+
+ # The names parameter for the XSLT stylesheet
+ XSLTPARAMS=""

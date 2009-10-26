@@ -3,7 +3,7 @@
 # URL: 
 # Maintainer: Blankoworld
 # Packager: blankoworld at wanadoo dot fr
-# Depends on: gcc, autoconf
+# Depends on: opensp
 
 name=openjade
 version=1.5.2
@@ -17,5 +17,6 @@ build() {
   ./configure --prefix=/usr --disable-doc-build
   make
   make DESTDIR=$PKG install
+  rm -rf $PKG/usr/share/doc
 }
 

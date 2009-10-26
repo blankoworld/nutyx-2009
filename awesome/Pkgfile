@@ -36,4 +36,6 @@ build() {
   make DESTDIR=$PKG install
 
   rm -rf $PKG/usr/share/doc/
+  mkdir -p $PKG/etc/xdg/awesome/
+  cp $PKG/usr/etc/xdg/awesome/rc.lua $PKG/etc/xdg/awesome/
 }

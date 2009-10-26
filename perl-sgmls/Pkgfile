@@ -1,0 +1,24 @@
+# Description: jeu de routines Perl5 pour traiter la sortie des analyseurs SGML sgmls et nsgmls
+# URL: http://search.cpan.org/~DMEGG/SGMLSpm/
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+# Depends on: perl
+
+name=perl-sgmls
+version=1.03ii
+release=1
+group=util
+realname=SGMLSpm
+source=( http://www.cpan.org/authors/id/D/DM/DMEGG/$realname-$version.tar.gz )
+
+build() {
+  cd $realname
+  mkdir -p $PKG/usr/share/doc/perl5/
+  sed -i "s|BINDIR = /usr/local/bin|BINDIR = $PKG/usr/local/bin|" $SRC/$realname/Makefile
+  sed -i "s|PERL5DIR = /usr/local/lib/perl5|PERL5DIR = $PKG/usr/lib/perl5|" $SRC/$realname/Makefile
+  sed -i "s|HTMLDIR = /usr/local/lib/www/docs|HTMLDIR = $PKG/usr/share/doc/perl5/|" $SRC/$realname/Makefile
+  make
+  make html
+  make install
+}
+

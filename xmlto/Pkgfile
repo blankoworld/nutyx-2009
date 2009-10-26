@@ -1,0 +1,20 @@
+# Description: Permet de convertir xml vers de nombreux autres formats
+# URL: http://cyberelk.net/tim/software/xmlto/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: libxml2, libxslt, docbook-xml, docbook-xsl, docbook-sgml
+
+name=xmlto
+version=0.0.21
+release=1
+PKGMK_WGET_OPTS="--no-check-certificate"
+source=(https://fedorahosted.org/releases/x/m/xmlto/$name-$version.tar.bz2 \
+$name.patch)
+
+build() {	
+	cd $name-$version
+	patch -p1 -d $SRC/$name-$version < ../$name.patch
+	./configure --prefix=/usr
+	make
+	make DESTDIR=$PKG install
+}

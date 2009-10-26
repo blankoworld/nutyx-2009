@@ -1,0 +1,24 @@
+# Description: Bibliothèque d'autorisations qui sont une interface graphique à su et sudo
+# URL: http://www.nongnu.org/gksu/
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+# Depends on: libgksu
+
+name=gksu
+version=2.0.2
+release=1
+source=( http://people.debian.org/~kov/$name/$name-$version.tar.gz )
+
+build() {
+  cd $name-$version
+  sed -i -e 's|/usr/bin/x-terminal-emulator|-l terminal|g' gksu.desktop
+  libtoolize --force
+  aclocal
+  autoconf
+  automake
+  ./configure --prefix=/usr --sysconfdir=/etc \
+    --localstatedir=/var --disable-static
+  make
+  make DESTDIR=$PKG install
+}
+

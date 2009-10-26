@@ -1,0 +1,38 @@
+# Description: outil d'analyse syntaxique de SGML de James Clark
+# URL: http://openjade.sourceforge.net/
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+# Depends on: libxml2 sgml-common
+
+name=opensp
+version=1.5.1
+release=1
+group=util
+realname=OpenSP
+source=( http://prdownloads.sourceforge.net/openjade/$realname-$version.tar.gz )
+
+build() {
+  cd $realname-$version
+  sed -i 's:32,:253,:' $SRC/$realname-$version/lib/Syntax.cxx
+  sed -i 's:LITLEN          240 :LITLEN          8092:' \
+    $SRC/$realname-$version/unicode/{gensyntax.pl,unicode.syn}
+  ./configure --prefix=/usr \
+    --disable-static \
+    --disable-doc-build \
+    --enable-default-catalog=/etc/sgml/catalog --enable-http \
+    --enable-default-search-path=/usr/share/sgml
+  make pkgdatadir=$PKG/usr/share/sgml/$realname-$version
+  make pkgdatadir=$PKG/usr/share/sgml/$realname-$version install
+
+  rm -rf $PKG/usr/share/doc
+
+#  ln -v -sf onsgmls /usr/bin/nsgmls
+#  ln -v -sf osgmlnorm /usr/bin/sgmlnorm
+#  ln -v -sf ospam /usr/bin/spam
+#  ln -v -sf ospcat /usr/bin/spcat
+#  ln -v -sf ospent /usr/bin/spent
+#  ln -v -sf osx /usr/bin/sx
+#  ln -v -sf osx /usr/bin/sgml2xml
+#  ln -v -sf libosp.so /usr/lib/libsp.so
+}
+

@@ -1,0 +1,17 @@
+# Description: po4a permet de simplifier et maintenir des traductions
+# URL: http://po4a.alioth.debian.org/
+# Maintainer: Blankoworld
+# Packager: blankoworld at wanadoo dot fr
+# Depends on: perl, gettext, sp, perl-sgmls, 
+
+name=po4a
+version=0.36.4
+release=1
+group=app, util
+source=( https://alioth.debian.org/frs/download.php/3104/$name-$version.tar.gz )
+
+build() {
+  cd $SRC/$name-v$version/
+
+}
+
