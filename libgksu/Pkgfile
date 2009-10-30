@@ -2,7 +2,7 @@
 # URL: http://www.nongnu.org/gksu/
 # Maintainer: NuTyX Contrib
 # Packager: Arnaud Fernandés
-# Depends on: gtk+, gconf, startup-notification, gnome-keyring, libgtop
+# Depends on: gtk, gconf, startup-notification, gnome-keyring, libgtop
 
 name=libgksu
 version=2.0.12
