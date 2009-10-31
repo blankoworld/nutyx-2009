@@ -1,7 +1,7 @@
 # Description: Client/démon BitTorrent avec interface web et ligne de commande
 # URL:         http://transmission.m0k.org/
 # Packager: Blankoworld <blankoworld@wanadoo.fr>
-# Depends on:  gtk, openssl, curl
+# Depends on:  gtk, openssl, curl, xorg-xcb-util
 
 name=transmission
 version=1.76
