@@ -1,0 +1,31 @@
+# Description: Client/démon BitTorrent avec interface web et ligne de commande
+# URL:         http://transmission.m0k.org/
+# Packager: Blankoworld <blankoworld@wanadoo.fr>
+# Depends on:  gtk, openssl, curl
+
+name=transmission
+version=1.76
+release=1
+source=( http://download.m0k.org/$name/files/$name-$version.tar.bz2 \
+$name.desktop )
+
+build() {
+  cd $name-$version
+
+  # Compilation
+  ./configure --prefix=/usr \
+    --mandir=/usr/man \
+    --enable-nls \
+    --with-gtk \
+    --enable-cli \
+    --enable-daemon
+  make
+  make DESTDIR=$PKG install
+
+  # Traitement divers
+  rm $PKG/usr/share/transmission/web/LICENSE
+
+  # Installation du raccourci bureau
+  mkdir -p $PKG/usr/share/applications
+  install -m 644 ../$name.desktop $PKG/usr/share/applications/
+}
