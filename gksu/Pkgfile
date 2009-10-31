@@ -2,7 +2,7 @@
 # URL: http://www.nongnu.org/gksu/
 # Maintainer: Blankoworld
 # Packager: blankoworld at wanadoo dot fr
-# Depends on: libgksu
+# Depends on: libgksu, pkg-config, nautilus, intltool
 
 name=gksu
 version=2.0.2
