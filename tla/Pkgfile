@@ -1,6 +1,7 @@
 # Description: Système de contôle de version similaire à CVS et Subversion
 # URL: http://www.gnu.org/software/gnu-arch/
 # Packager: Blankoworld, blankoworld at wanadoo dot fr
+# Depends on: gawk, patch
 
 name=tla
 version=1.3.5
