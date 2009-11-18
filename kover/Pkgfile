@@ -20,7 +20,7 @@ build() {
   patch -i ../directory.patch src/directory.cc
 
   # Compilation
-  cmake ./
+  cmake ./ -Wno-dev
   make
   make DESTDIR=$PKG install
 
