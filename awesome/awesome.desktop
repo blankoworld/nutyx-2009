@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+# The names/descriptions should really be better
+Name=awesome
+Name[fr]= awesome
+Comment[fr]=Sélectionner cette session pour utiliser awesome comme
+environnment graphique
+Exec=
+Icon=
+Type=Application

@@ -1,21 +1,11 @@
-REQUIS
-
-  Le support de xcb sur cairo est requis. Installez xorg/xorg-xcb-util
-  et recompilez cairo.
-
-  prt-get depinst xorg-xcb-util
-  prt-get update -fr -if cairo
- 
 APRÈS INSTALLATION
 
-  Après une installation réussie, vous pouvez utiliser
-  /usr/etc/xdg/awesome/rc.lua comme fichier de configuration par défaut :
+  Après une installation réussie, vous pouvez garder
+  /etc/xdg/awesome/rc.lua comme fichier de configuration par défaut, 
+  ou bien copier le fichier /etc/xdg/awesome/rc.lua dans votre 
+  répertoire personnel : 
 
-    awesome -c /usr/etc/xdg/awesome/rc.lua
-
-  ou bien copiez ce fichier dans votre répertoire personnel :
-
-  $HOME/.config/awesome
+    $HOME/.config/awesome
 
   Lisez les pages de manuel de awesome et awesomerc pour de plus amples 
   informations.

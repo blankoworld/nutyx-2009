@@ -1,12 +1,12 @@
+drwxr-xr-x	root/root	etc/
+drwxr-xr-x	root/root	etc/xdg/
+drwxr-xr-x	root/root	etc/xdg/awesome/
+-rw-r--r--	root/root	etc/xdg/awesome/rc.lua
 drwxr-xr-x	root/root	usr/
 drwxr-xr-x	root/root	usr/bin/
 -rwxr-xr-x	root/root	usr/bin/awesome
 -rwxr-xr-x	root/root	usr/bin/awesome-client
 -rwxr-xr-x	root/root	usr/bin/awsetbg
-drwxr-xr-x	root/root	usr/etc/
-drwxr-xr-x	root/root	usr/etc/xdg/
-drwxr-xr-x	root/root	usr/etc/xdg/awesome/
--rw-r--r--	root/root	usr/etc/xdg/awesome/rc.lua
 drwxr-xr-x	root/root	usr/man/
 drwxr-xr-x	root/root	usr/man/man1/
 -rw-r--r--	root/root	usr/man/man1/awesome-client.1.gz

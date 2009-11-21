@@ -11,7 +11,9 @@ source=( http://$name.naquadah.org/download/$name-$version.tar.bz2 \
 $name-client.1 \
 $name.1 \
 awsetbg.1 \
-${name}rc.5 )
+${name}rc.5 \
+$name.desktop \
+background.png )
 
 build() {
   mkdir -p $PKG/usr/man/man{1,5}
@@ -35,5 +37,18 @@ build() {
   make
   make DESTDIR=$PKG install
 
+  # Suppression de la documentation
   rm -rf $PKG/usr/share/doc/
+
+  # Création de la configuration
+  mkdir -p $PKG/etc/xdg/awesome/
+  cp $PKG/usr/etc/xdg/awesome/rc.lua $PKG/etc/xdg/awesome/
+  rm -rf $PKG/usr/etc/
+
+  # Ajout dans la liste des environnements disponibles
+  cp $SRC/$name.desktop $PKG/usr/share/xsessions/
+
+  # NuTyXification
+  rm $PKG/usr/share/awesome/themes/default/background.png
+  cp $SRC/background.png $PKG/usr/share/awesome/themes/default/
 }
