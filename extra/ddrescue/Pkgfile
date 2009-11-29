@@ -1,0 +1,27 @@
+# Description: ddrescue est un outil de récupération de données. Il copie des données d'un fichier ou d'un périphérique (disque dur, cdrom, etc.) vers un autre, en tentant de sauver les données en cas d'erreurs.
+# URL: http://www.gnu.org/software/ddrescue/ddrescue.html
+# Packager: Danny Rawlins, <monster dot romster at gmail dot com>
+# Maintainer: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: texinfo
+
+name=ddrescue
+version=1.11
+release=1
+source=( http://ftp.gnu.org/gnu/$name/$name-$version.tar.gz )
+
+build() {
+	cd $name-$version
+
+  # préparation
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/man
+  
+  # compilation
+	make
+	make DESTDIR=$PKG install
+
+  # suppression des fichiers inutiles
+	rm -r $PKG/usr/share/info
+	rmdir $PKG/usr/share
+}
