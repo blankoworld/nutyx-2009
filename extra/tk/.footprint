@@ -151,7 +151,6 @@ drwxr-xr-x	root/root	usr/lib/tk8.5/msgs/
 -rw-r--r--	root/root	usr/lib/tk8.5/palette.tcl
 -rw-r--r--	root/root	usr/lib/tk8.5/panedwindow.tcl
 -rw-r--r--	root/root	usr/lib/tk8.5/pkgIndex.tcl
--rw-r--r--	root/root	usr/lib/tk8.5/prolog.ps
 -rw-r--r--	root/root	usr/lib/tk8.5/safetk.tcl
 -rw-r--r--	root/root	usr/lib/tk8.5/scale.tcl
 -rw-r--r--	root/root	usr/lib/tk8.5/scrlbar.tcl
