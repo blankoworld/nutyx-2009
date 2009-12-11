@@ -1,0 +1,23 @@
+# Description: Système de compilation pour les documents LaTeX
+# URL: http://www.pps.jussieu.fr/~beffara/soft/rubber/
+# Packager: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: python
+# Nice2have: texlive bibtex dvips
+
+name=rubber
+version=1.1
+release=1
+source=( http://ebeffara.free.fr/pub/$name-$version.tar.gz )
+
+build() {
+  cd $SRC/$name-$version/
+
+  # compilation
+  ./configure --prefix=$PKG/usr/local/
+  make
+  make install
+
+  # nettoyage
+  rm -rf $PKG/usr/local/man/
+}
+
