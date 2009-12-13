@@ -5,16 +5,16 @@
 
 name=httpup
 version=0.4.0k
-release=1
+release=2
 source=(http://jw.tks6.net/files/crux/${name}-$version.tar.gz httpup)
 
 build() {
   cd $name-$version
 
   make
-  mkdir -p $PKG/usr/{bin,man/man8}
+  mkdir -p $PKG/usr/{bin,share/man/man8}
 
   cp httpup httpup-repgen $PKG/usr/bin
   install -D -m 755 $SRC/httpup $PKG/etc/ports/drivers/httpup
-  cp *.8 $PKG/usr/man/man8
+  cp *.8 $PKG/usr/share/man/man8
 }
