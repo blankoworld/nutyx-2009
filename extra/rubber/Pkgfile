@@ -13,11 +13,11 @@ build() {
   cd $SRC/$name-$version/
 
   # compilation
-  ./configure --prefix=$PKG/usr/local/
+  ./configure --prefix=$PKG/usr
   make
   make install
 
   # nettoyage
-  rm -rf $PKG/usr/local/man/
+  rm -rf $PKG/usr/share/man/
 }
 
