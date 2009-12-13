@@ -3,9 +3,6 @@ drwxr-xr-x	root/root	usr/bin/
 -rwxr-xr-x	root/root	usr/bin/cam
 -rwxr-xr-x	root/root	usr/bin/feh
 -rwxr-xr-x	root/root	usr/bin/gen_cam_menu.sh
-drwxr-xr-x	root/root	usr/man/
-drwxr-xr-x	root/root	usr/man/man1/
--rw-r--r--	root/root	usr/man/man1/feh.1.gz
 drwxr-xr-x	root/root	usr/share/
 drwxr-xr-x	root/root	usr/share/feh/
 drwxr-xr-x	root/root	usr/share/feh/fonts/
@@ -24,3 +21,6 @@ drwxr-xr-x	root/root	usr/share/feh/images/
 -rw-r--r--	root/root	usr/share/feh/images/menubg_pastel.png
 -rw-r--r--	root/root	usr/share/feh/images/menubg_sky.png
 -rw-r--r--	root/root	usr/share/feh/images/menubg_wood.png
+drwxr-xr-x	root/root	usr/share/man/
+drwxr-xr-x	root/root	usr/share/man/man1/
+-rw-r--r--	root/root	usr/share/man/man1/feh.1.gz
