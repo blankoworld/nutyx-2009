@@ -1,0 +1,22 @@
+# Description: Contient des définitions type pour les documents afin de vérifier les fichiers au format xml
+# URL:  http://www.docbook.org
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: unzip, libxml2
+
+name=docbook-xml
+version=4.5
+release=2
+source=(http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip)
+
+build() {
+	install -v -d -m755 $PKG/usr/share/xml/docbook/xml-dtd-4.5
+	install -v -d -m755 $PKG/etc/xml
+	chown -R root:root .
+	cp -v -af docbook.cat *.dtd ent/ *.mod \
+	$PKG/usr/share/xml/docbook/xml-dtd-4.5
+	
+
+}
+
+	
