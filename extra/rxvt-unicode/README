@@ -1,0 +1,9 @@
+Pour personnaliser URxvt, veuillez lire la documentation officielle : 
+  http://wiki.afterstep.org/index.php?title=Rxvt-Unicode_Configuration_Tutorial
+
+Vous avez alors deux possibilités : 
+- soit vous modifiez la configuration pour tout les utilisateurs via 
+    /usr/lib/X11/app-defaults/URxvt
+- soit vous ajouter votre configuration dans le fichier
+    ~/.Xdefaults
+
