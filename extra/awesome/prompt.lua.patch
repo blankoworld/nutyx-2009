@@ -1,0 +1,11 @@
+--- prompt.lua	2009-12-17 00:22:25.000000000 +0100
++++ /usr/share/awesome/lib/awful/widget/prompt.lua	2009-12-18 01:00:36.000000000 +0100
+@@ -33,7 +33,7 @@
+     args.type = "textbox"
+     promptbox.widget = capi.widget(args)
+     promptbox.run = run
+-    promptbox.prompt = args.prompt or "Run: "
++    promptbox.prompt = args.prompt or "Lancer : "
+     return promptbox
+ end
+ 

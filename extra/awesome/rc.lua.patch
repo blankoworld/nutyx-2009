@@ -1,0 +1,101 @@
+--- rc.lua	2009-12-17 00:22:25.000000000 +0100
++++ /etc/xdg/awesome/rc.lua	2009-12-19 14:31:46.000000000 +0100
+@@ -7,8 +7,10 @@
+ 
+ -- {{{ Variable definitions
+ -- Themes define colours, icons, and wallpapers
+--- The default is a dark theme
+-theme_path = "/usr/share/awesome/themes/default/theme.lua"
++-- The default is a nutyx theme
++theme_path = "/usr/share/awesome/themes/nutyx/theme.lua"
++-- The default awesome theme is a dark theme
++-- theme_path = "/usr/share/awesome/themes/default/theme.lua"
+ -- Uncommment this for a lighter theme
+ -- theme_path = "/usr/share/awesome/themes/sky/theme.lua"
+ 
+@@ -16,8 +18,8 @@
+ beautiful.init(theme_path)
+ 
+ -- This is used later as the default terminal and editor to run.
+-terminal = "xterm"
+-editor = os.getenv("EDITOR") or "nano"
++terminal = "urxvt" or "xterm"
++editor = os.getenv("EDITOR") or "vim"
+ editor_cmd = terminal .. " -e " .. editor
+ 
+ -- Default modkey.
+@@ -52,6 +54,7 @@
+     ["MPlayer"] = true,
+     ["pinentry"] = true,
+     ["gimp"] = true,
++    ["vlc"] = true,
+     -- by instance
+     ["mocp"] = true
+ }
+@@ -74,13 +77,19 @@
+ for s = 1, screen.count() do
+     -- Each screen has its own tag table.
+     tags[s] = {}
+-    -- Create 9 tags per screen.
+-    for tagnumber = 1, 9 do
+-        tags[s][tagnumber] = tag(tagnumber)
+-        -- Add tags to screen one by one
+-        tags[s][tagnumber].screen = s
+-        awful.layout.set(layouts[1], tags[s][tagnumber])
+-    end
++    -- Creation de 6 etiquettes (a vous de personnaliser)
++    tags[s][1] = tag("un")
++    tags[s][1].screen = s
++    tags[s][2] = tag("deux")
++    tags[s][2].screen = s
++    tags[s][3] = tag("trois")
++    tags[s][3].screen = s
++    tags[s][4] = tag("quatre")
++    tags[s][4].screen = s
++    tags[s][5] = tag("cinq")
++    tags[s][5].screen = s
++    tags[s][6] = tag("six")
++    tags[s][6].screen = s
+     -- I'm sure you want to see at least one tag.
+     tags[s][1].selected = true
+ end
+@@ -94,14 +103,14 @@
+ 
+ -- Create a laucher widget and a main menu
+ myawesomemenu = {
+-   { "manual", terminal .. " -e man awesome" },
+-   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
+-   { "restart", awesome.restart },
+-   { "quit", awesome.quit }
++   { "manuel", terminal .. " -e man awesome" },
++   { "édition config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
++   { "relancer", awesome.restart },
++   { "quitter", awesome.quit }
+ }
+ 
+ mymainmenu = awful.menu.new({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+-                                        { "open terminal", terminal }
++                                        { "ouvrir terminal", terminal }
+                                       }
+                             })
+ 
+@@ -242,7 +251,7 @@
+ 
+     awful.key({ modkey }, "x",
+               function ()
+-                  awful.prompt.run({ prompt = "Run Lua code: " },
++                  awful.prompt.run({ prompt = "Lancer code Lua : " },
+                   mypromptbox[mouse.screen].widget,
+                   awful.util.eval, nil,
+                   awful.util.getdir("cache") .. "/history_eval")
+@@ -426,7 +435,8 @@
+ end)
+ 
+ -- Hook called every minute
+-awful.hooks.timer.register(60, function ()
+-    mytextbox.text = os.date(" %a %b %d, %H:%M ")
++awful.hooks.timer.register(20, function ()
++    os.setlocale("fr_FR.utf8")
++    mytextbox.text = os.date(" %a le %d %b %Y \| %H:%M ")
+ end)
+ -- }}}

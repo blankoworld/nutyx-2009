@@ -1,0 +1,85 @@
+# Description: Gestionnaire de fenêtre rapide, léger et dynamique pour X
+# URL: http://awesome.naquadah.org/
+# Packager:  Bartlomiej Palmowski <rotwang at crux dot org dot pl>
+# Maintainer: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: cmake gperf glib lua cairo pango imlib2 libev dbus imagemagick libxdg-basedir xorg xorg-xcb-util startup-notification graphviz feh rxvt-unicode rxvt-unicode-theme-awesome
+
+name=awesome
+version=3.3.2
+release=1
+source=( http://$name.naquadah.org/download/$name-$version.tar.bz2 \
+$name-client.1 \
+$name.1 \
+awsetbg.1 \
+${name}rc.5 \
+awsetbg.patch \
+background.png \
+${name}_nutyx_{16,32,48,64}.png \
+rc.lua.patch \
+theme.lua.patch \
+prompt.lua.patch \
+prompt.lua.in.patch )
+
+build() {
+  # préparation (repris de chez Bartlomiej)
+  #
+  mkdir -p $PKG/usr/share/man/man{1,5}
+  cp $name{,-client}.1 awsetbg.1 $PKG/usr/share/man/man1
+  cp ${name}rc.5 $PKG/usr/share/man/man5
+
+  cd $name-$version
+
+  # corrections diverses
+  #
+  # quick and ugly hack to pass libev nonstandard headers dir to compiler
+  # Cf extra/libev/Pkgfile pour plus d'infos
+  sed -i '/\${AWESOME_OPTIONAL_INCLUDE_DIRS})$/s/)$/ ${LIBEV_INCLUDE_DIRS})/' \
+    CMakeLists.txt
+  # remove warnings on redundand declarations and undefined identifier stuff
+  # so we doesn't get shitloads of warnings from ev.h
+  sed -i -e 's/-Wredundant-decls//' \
+    -e 's/-Wundef//' awesomeConfig.cmake
+
+  # compilation
+  #
+  cmake . -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DAWESOME_MAN_PATH=/usr/share/man \
+  	-DGENERATE_MANPAGES=OFF \
+    -DLIBEV_INCLUDE_DIRS=/usr/include/libev
+  make
+  make DESTDIR=$PKG install
+
+  # suppression de la doc
+  #
+  rm -rf $PKG/usr/share/doc
+
+  # Configuration et mise au point
+  #
+
+  # ajout des icônes @ la mode NuTyX
+  cp -f $SRC/${name}_nutyx_16.png $PKG/usr/share/$name/icons
+  cp -f $SRC/${name}_nutyx_32.png $PKG/usr/share/$name/icons
+  cp -f $SRC/${name}_nutyx_48.png $PKG/usr/share/$name/icons
+  cp -f $SRC/${name}_nutyx_64.png $PKG/usr/share/$name/icons
+
+  # modification de l'outil par défaut pour application du fond d'écran
+  patch -p1 $PKG/usr/bin/awsetbg < $SRC/awsetbg.patch
+
+  # création du theme NuTyX
+  cp -r $PKG/usr/share/$name/themes/default $PKG/usr/share/$name/themes/nutyx
+  # ajout du fond d'écran @ la mode NuTyX
+  cp -f $SRC/background.png $PKG/usr/share/$name/themes/nutyx
+
+  # préparation dossier de configuration
+  mkdir -p $PKG/etc/xdg/$name
+  # ajout du fichier de configuration
+  cp $PKG/usr/etc/xdg/$name/rc.lua $PKG/etc/xdg/$name
+  # modification du fichier de configuration pour francisation
+  patch -p1 $PKG/etc/xdg/$name/rc.lua < $SRC/rc.lua.patch
+  # application de couleurs pour le thème NuTyX
+  patch -p1 $PKG/usr/share/$name/themes/nutyx/theme.lua < $SRC/theme.lua.patch
+  # modification pour francisation du prompt
+  patch -p1 $PKG/usr/share/$name/lib/awful/widget/prompt.lua < $SRC/prompt.lua.patch
+  patch -p1 $PKG/usr/share/$name/lib/awful/widget/prompt.lua.in < $SRC/prompt.lua.in.patch
+}

@@ -1,0 +1,15 @@
+39cdf5e86f761c3ca73f0b2b6427a961  awesome-3.3.2.tar.bz2
+8fef72c3934633cafe00e0177be3f7f0  awesome-client.1
+d940145b5cd94128f1c9eb09931818e6  awesome.1
+25a3f4f59048416e4870ad882b9871fd  awesome_nutyx_16.png
+5b1a96d7ff9621a2c440f865de583791  awesome_nutyx_32.png
+f24f19af528170c2c866720deb2fe071  awesome_nutyx_48.png
+2d3482dbe99bd733a9a92a04c0243c8c  awesome_nutyx_64.png
+acf34f1e71416edd4f722ccc846c375b  awesomerc.5
+00e4641274ac1d2110d80c0ad7aba5dc  awsetbg.1
+9e057ecb636e834f8bf89481d008b6e6  awsetbg.patch
+0bdfceb6136abfd8c91dee91eecdb79d  background.png
+46d68cfcd97c8b48f2afa1e07f5b803c  prompt.lua.in.patch
+3fb99b607334b257e372b712d5920d36  prompt.lua.patch
+d790a517c67190eb62d9e36bf518ecfd  rc.lua.patch
+61fbae0395f957da81e194541c9ebf3f  theme.lua.patch
