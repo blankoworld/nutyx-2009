@@ -1,17 +1,19 @@
-# Description: une petite bibliothèque pour le rendu des documents Postscript
-# URL:         http://libspectre.freedesktop.org
-# Packager:    Hannes Mayer <kontakt at ecarux dot de>
-# Maintainer:  Blankoworld <blankoworld at wanadoo dot fr>
-# Depends on:  ghostscript
+# Description: librairie pour le rendu des documents postscript
+# URL: http://libspectre.freedesktop.org/wiki/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: ghostscript
 
 name=libspectre
-version=0.2.2
+version=0.2.3
 release=1
-source=( http://libspectre.freedesktop.org/releases/$name-$version.tar.gz )
+source=(http://libspectre.freedesktop.org/releases/$name-$version.tar.gz)
 
-build() { 
-	 cd $name-$version 
-	 ./configure --prefix=/usr 
- 	 make 
- 	 make DESTDIR=$PKG install 
+build() {
+cd $name-$version
+	./configure --prefix=/usr \
+	--disable-static
+	make
+	make DESTDIR=$PKG install
 }
+

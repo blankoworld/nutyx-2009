@@ -78,10 +78,6 @@ lrwxrwxrwx	root/root	usr/lib/graphviz/libgvplugin_gd.so.6 -> libgvplugin_gd.so.6
 lrwxrwxrwx	root/root	usr/lib/graphviz/libgvplugin_gdk_pixbuf.so -> libgvplugin_gdk_pixbuf.so.6.0.0
 lrwxrwxrwx	root/root	usr/lib/graphviz/libgvplugin_gdk_pixbuf.so.6 -> libgvplugin_gdk_pixbuf.so.6.0.0
 -rwxr-xr-x	root/root	usr/lib/graphviz/libgvplugin_gdk_pixbuf.so.6.0.0
--rwxr-xr-x	root/root	usr/lib/graphviz/libgvplugin_gs.la
-lrwxrwxrwx	root/root	usr/lib/graphviz/libgvplugin_gs.so -> libgvplugin_gs.so.6.0.0
-lrwxrwxrwx	root/root	usr/lib/graphviz/libgvplugin_gs.so.6 -> libgvplugin_gs.so.6.0.0
--rwxr-xr-x	root/root	usr/lib/graphviz/libgvplugin_gs.so.6.0.0
 -rwxr-xr-x	root/root	usr/lib/graphviz/libgvplugin_gtk.la
 lrwxrwxrwx	root/root	usr/lib/graphviz/libgvplugin_gtk.so -> libgvplugin_gtk.so.6.0.0
 lrwxrwxrwx	root/root	usr/lib/graphviz/libgvplugin_gtk.so.6 -> libgvplugin_gtk.so.6.0.0

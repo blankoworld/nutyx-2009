@@ -10,10 +10,9 @@ drwxr-xr-x	root/root	usr/include/libspectre/
 -rw-r--r--	root/root	usr/include/libspectre/spectre-version.h
 -rw-r--r--	root/root	usr/include/libspectre/spectre.h
 drwxr-xr-x	root/root	usr/lib/
--rw-r--r--	root/root	usr/lib/libspectre.a
 -rwxr-xr-x	root/root	usr/lib/libspectre.la
-lrwxrwxrwx	root/root	usr/lib/libspectre.so -> libspectre.so.1.1.2
-lrwxrwxrwx	root/root	usr/lib/libspectre.so.1 -> libspectre.so.1.1.2
--rwxr-xr-x	root/root	usr/lib/libspectre.so.1.1.2
+lrwxrwxrwx	root/root	usr/lib/libspectre.so -> libspectre.so.1.1.3
+lrwxrwxrwx	root/root	usr/lib/libspectre.so.1 -> libspectre.so.1.1.3
+-rwxr-xr-x	root/root	usr/lib/libspectre.so.1.1.3
 drwxr-xr-x	root/root	usr/lib/pkgconfig/
 -rw-r--r--	root/root	usr/lib/pkgconfig/libspectre.pc
