@@ -1,0 +1,18 @@
+# Description: Moteur légé de rendu HTML pour l'édition et l'impression
+# URL: http://cvs.gnome.org/viewcvs/gtkhtml/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: libgnomeui, gnome-icon-theme, libgnomeprintui, libsoup, enchant
+
+name=gtkhtml
+version=3.28.2
+release=1
+source=(http://ftp.gnome.org/pub/gnome/sources/$name/${version%.*}/$name-$version.tar.bz2)
+
+build () {
+	cd $name-$version
+	./configure --prefix=/usr \
+		--libexecdir=/usr/lib/$name
+	make
+	make DESTDIR=$PKG install
+}

@@ -1,0 +1,18 @@
+# Description: Highlighting and replacement of misspelled words
+# URL: http://gtkspell.sourceforge.net/
+# Packager: thierryn1 at hispeed dot ch
+# Maintainer: NuTyX core team
+# Depends on: gtk, aspell, enchant
+
+name=gtkspell
+version=2.0.16
+release=1
+source=(http://gtkspell.sourceforge.net/download/$name-$version.tar.gz)
+
+build() {
+cd $name-$version
+./configure --prefix=/usr
+make
+make DESTDIR=$PKG install
+rm -rf $PKG/usr/share/gtk-doc
+}

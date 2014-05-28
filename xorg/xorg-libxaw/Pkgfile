@@ -1,0 +1,19 @@
+# Description: X Athena Widgets toolkit
+# URL: http://xorg.freedesktop.org
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: xorg-xproto, xorg-libx11, xorg-xextproto, xorg-libxext, xorg-libxt, xorg-libxmu, xorg-libxpm, xorg-libxau
+
+name=xorg-libxaw
+version=1.0.6
+release=1
+source=(http://xorg.freedesktop.org/releases/individual/lib/libXaw-$version.tar.bz2)
+
+build() {
+	cd libXaw-$version
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+}

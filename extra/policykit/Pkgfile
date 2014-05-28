@@ -1,0 +1,27 @@
+# Description: Systeme d'abstraction de materiel
+# URL: http://hal.freedesktop.org/docs/PolicyKit/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: dbus, expat, dbus-glib
+
+name=policykit
+version=0.9
+release=3
+source=(http://hal.freedesktop.org/releases/PolicyKit-${version}.tar.gz\
+	$name-no-pam.patch)
+build() {
+        cd PolicyKit-$version
+	patch -i $SRC/$name-no-pam.patch \
+	src/polkit-dbus/polkit-resolve-exe-helper.c
+        sed -i "s/\-nonet//" doc/man/Makefile.in
+        ./configure --prefix=/usr \
+                    --sysconfdir=/etc \
+            --libexecdir=/usr/lib/PolicyKit \
+	--disable-man-pages \
+	--disable-gtk-doc \
+                --localstatedir=/var \
+	--with-authfw=shadow
+
+        make
+        make DESTDIR=$PKG install
+}

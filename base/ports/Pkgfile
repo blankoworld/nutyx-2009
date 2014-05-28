@@ -1,0 +1,24 @@
+# Description: Système de ports NuTyX
+# URL:         http://crux.nu
+# Maintainer:  NuTyX core team
+# Packager: thierryn1 at hispeed.ch
+# Depends: 
+
+name=ports
+version=1.5
+release=5
+source=(http://crux.nu/files/tools/ports/$name-$version.tar.gz \
+base.rsync extra.rsync xorg.rsync xfce.rsync kde.rsync gnome.rsync)
+
+build () {
+cd $name-$version
+make
+make DESTDIR=$PKG install
+mkdir -p $PKG/usr/share/
+mv $PKG/usr/man \
+$PKG/usr/share
+for i in base extra xorg xfce kde gnome
+do
+	install -m 0644 ../$i.rsync $PKG/etc/ports/$i.rsync
+done
+}

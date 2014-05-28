@@ -1,0 +1,74 @@
+########################
+#
+#  Urxvt Section
+#
+###################################
+URxvt.geometry:              80x25
+URxvt.inheritPixmap:         true
+URxvt.reverseVideo:          false
+URxvt.tintColor:             #ffffff
+URxvt.shading:               20             !trans=100, 0=opaque
+URxvt.fading:                10              !term unfocus
+URxvt*font:                  xft:Monospace-13:antialias=true
+URxvt.boldFont:              xft:Monospace-13:bold
+URxvt.scrollBar:             false
+URxvt.scrollBar_floating:    true
+URxvt.scrollBar_right:       true
+URxvt.scrollColor:           orange
+URxvt.scrollstyle:           xterm
+URxvt.saveLines:             5500
+URxvt.cursorColor:           #ee7900
+URxvt.cursorBlink:           true
+URxvt.colorBD:               white
+# Onglets
+URxvt.perl-ext:              tabbed
+URxvt.tabbed.tabbar-fg:      0
+URxvt.tabbed.tabbar-bg:      12
+URxvt.tabbed.tab-fg:         15
+URxvt.tabbed.tab-bg:         0
+
+# Pour ne pas avoir de bordures
+#URxvt*borderLess:            true
+ 
+# Pour avoir le marquage des urls et les ouvrir avec FF
+#URxvt.perl-ext-common: default,digital-clock,matcher
+URxvt.perl-ext-common:       default,matcher
+URxvt.urlLauncher:           firefox
+#couleur des urls
+URxvt.colorBD:               3
+
+## Couleurs psychédéliquoblankoïques
+URxvt.background:            #000000
+URxvt.foreground:            #ffffff
+# noir clair
+#URxvt*color0: #101010
+# rouge clair
+#URxvt*color1: #f13a21
+# brun clair
+URxvt*color2: #932c1d
+# jaune
+#URxvt*color3: #ffd00a
+# bleu foncé
+URxvt*color4: #3465a4
+# violet foncé
+URxvt*color5: #75507b
+# gris clair
+URxvt*color6: #ad989a
+# blanc
+#URxvt*color7: #f2f2f2
+# gris
+#URxvt*color8: #1d202f
+# rouge
+URxvt*color9: #ef2929
+# vert pâle
+URxvt*color10: #867c34
+# jaune clair
+URxvt*color11: #fce94f
+# orange foncé
+URxvt*color12: #ee7900
+# rouge/rose
+URxvt*color13: #cd4533
+# bleu ciel
+URxvt*color14: #4bb8a5
+# blanc
+URxvt*color15: #eeeeec

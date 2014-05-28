@@ -1,0 +1,14 @@
+# Description: Thème URxvt pour awesome sur NuTyX
+# URL: 
+# Packager: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: rxvt-unicode
+
+name=rxvt-unicode-theme-awesome
+version=2009.1
+release=1
+source=( URxvt )
+
+build() {
+  mkdir -p $PKG/usr/lib/X11/app-defaults
+  cp URxvt $PKG/usr/lib/X11/app-defaults
+}

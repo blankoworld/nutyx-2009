@@ -1,0 +1,17 @@
+--- profile.old	2009-12-19 23:55:57.000000000 +0100
++++ profile	2009-12-20 01:22:02.000000000 +0100
+@@ -54,10 +54,13 @@
+ NORMAL="\[\e[0m\]"
+ RED="\[\e[1;31m\]"
+ GREEN="\[\e[1;32m\]"
++JAUNE='\[\033[0;33m\]'
++GROUGE='\[\033[1;31m\]'
++GBLANC='\[\033[1;37m\]'
+ if [[ $EUID == 0 ]] ; then
+   PS1="$RED\u [ $NORMAL\w$RED ]# $NORMAL"
+ else
+-  PS1="$GREEN\u [ $NORMAL\w$GREEN ]\$ $NORMAL"
++  PS1="$GBLANC[ $JAUNE\w $GBLANC] $GROUGE\$ $NORMAL"
+ fi
+ 
+ for script in /etc/profile.d/*.sh ; do

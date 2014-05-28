@@ -1,0 +1,33 @@
+# Description: Client Bittorent leger et rapide
+# URL: http://www.transmissionbt.com/
+# Packager: fred.galusik at gmail dot com
+# Maintainer: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: gtk, openssl, curl, xorg-xcb-util
+
+name=transmission
+version=1.76
+release=1
+source=( http://download.m0k.org/$name/files/$name-$version.tar.bz2 \
+$name.desktop)
+
+build() {
+  cd $name-$version
+
+  #Compilation
+  ./configure --prefix=/usr \
+    --mandir=/usr/man \
+    --enable-nls \
+    --with-gtk \
+    --enable-cli \
+    --enable-daemon
+    make
+    make DESTDIR=$PKG install
+
+  # Traitement divers
+  rm $PKG/usr/share/transmission/web/LICENSE
+
+  # Installation du raccourci bureau
+  mkdir -p $PKG/usr/share/applications
+  install -m 644 ../$name.desktop $PKG/usr/share/applications/
+}
+

@@ -1,0 +1,18 @@
+# Description: client de système de contrôle de version
+# URL: http://savannah.nongnu.org/projects/cvs/
+# Maintainer: NuTyX Core Team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on:
+
+name=cvs
+version=1.11.23
+release=2
+source=(http://nongnu.mirror.ironie.org/releases/$name/source/stable/$version/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version
+	./configure --prefix=/usr
+	make
+	make DESTDIR=$PKG install
+	rm -r $PKG/usr/share/info/dir
+}

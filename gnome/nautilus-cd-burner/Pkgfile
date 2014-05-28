@@ -1,0 +1,21 @@
+# Description: Graver des CD directement dans Nautilus
+# URL: http://cvs.gnome.org/viewcvs/nautilus-cd-burner/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: gnome-mount, dbus, hal, nautilus
+
+name=nautilus-cd-burner
+version=2.24.0
+release=1
+source=(http://ftp.gnome.org/pub/gnome/sources/$name/${version%.*}/$name-$version.tar.bz2)
+
+build() {
+	cd $name-$version 
+	./configure --prefix=$GNOME_PREFIX \
+		--sysconfdir=/etc \
+		--libexecdir=$GNOME_PREFIX/lib/$name \
+		--disable-schemas-install \
+		--enable-dummy-write
+	make
+	make DESTDIR=$PKG install
+}

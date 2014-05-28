@@ -1,0 +1,12 @@
+APRÈS INSTALLATION
+
+  Après une installation réussie, vous pouvez garder
+  /etc/xdg/awesome/rc.lua comme fichier de configuration par défaut, 
+  ou bien copier le fichier /usr/etc/xdg/awesome/rc.lua dans votre 
+  répertoire personnel : 
+
+    $HOME/.config/awesome
+
+  Lisez les pages de manuel de awesome et awesomerc pour de plus amples 
+  informations.
+

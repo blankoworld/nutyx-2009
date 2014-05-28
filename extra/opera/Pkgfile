@@ -1,0 +1,25 @@
+# Description: Navigateur web basé sur la librairie qt
+# URL: http://www.opera.com
+# Maintainer: NuTyX core team
+# Packager: geantbrun at gmail dot com
+# Depends on: qt, jdk
+
+name=opera
+version=10.01
+release=1
+if [ "`uname -m`" == "i686" ]; then
+        _ARCH=i386
+else
+        _ARCH=x86_64
+fi
+source=( http://mirror.switch.ch/ftp/mirror/opera/linux/1001/final/en/${_ARCH}/opera-$version.gcc4-qt4.${_ARCH}.tar.gz \
+        opera.desktop opera.png )
+	
+build() {
+	cd $name-*
+	./install.sh DESTDIR=$PKG
+	mkdir -p $PKG/usr/share/{applications,licences/opera,icons/hicolor/48x48/apps}
+	install -D -m 644 ../opera.desktop $PKG/usr/share/applications/
+	install -D -m 644 LICENSE $PKG/usr/share/licences/opera/licence.txt
+        cp ../opera.png $PKG/usr/share/icons/hicolor/48x48/apps/opera.png
+}

@@ -1,0 +1,19 @@
+# Description: Client IRC rapide, léger et extensible
+# URL: http://weechat.flashtux.org/
+# Maintainer: NuTyX packager team
+# Packager: Skippythekangoo at yahoo dot fr
+# Depends on: aspell
+
+name=weechat
+version=0.3.0
+release=1
+source=(http://weechat.org/files/src/$name-$version.tar.gz)
+build() {
+cd $name-$version
+	mkdir build
+	cd build
+	cmake .. -DPREFIX=/usr
+	make
+	make DESTDIR=$PKG install
+}
+

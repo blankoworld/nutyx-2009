@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Initialisation de PKGROOT si nous sommes en prt-get
+if test -z $PKGROOT
+then
+  PKGROOT=/usr/ports/extra/awesome/
+fi
+
+# fichier de patch
+patch="${PKGROOT}profile.patch"
+
+if test -a $patch
+then
+  patch -p1 /etc/profile < $patch
+else
+  echo "Le fichier de patch a échoué, vous ne bénéficierez pas de la \
+personnalisation de la ligne de commande"
+fi
+

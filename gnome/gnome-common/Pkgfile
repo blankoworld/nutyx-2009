@@ -1,0 +1,20 @@
+# Description: Une collection d'utilitaires commun au projet GNOME
+# URL: http://www.gnome.org/
+# Packager: Matt Housh <jaeger at morpheus dot net>
+# Maintainer: Blankoworld <blankoworld at wanadoo dot net>
+# Depends on:
+
+name=gnome-common
+version=2.28.0
+release=1
+source=(http://ftp.gnome.org/pub/gnome/sources/$name/2.28/$name-$version.tar.bz2)
+
+build() {
+  cd $name-$version
+  sed -i -e 's/USE_NLS=yes/USE_NLS=no/' \
+    -e 's/ENABLE_NLS 1/ENABLE_NLS 0/' configure
+  ./configure --prefix=/usr
+  make
+  make DESTDIR=$PKG install
+}
+

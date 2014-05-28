@@ -1,0 +1,19 @@
+# Description: Librairie pour l'accès générique PCI
+# URL: http://xorg.freedesktop.org
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on:
+
+name=xorg-libpciaccess
+version=0.11.0
+release=1
+source=(http://xorg.freedesktop.org/releases/individual/lib/libpciaccess-$version.tar.bz2)
+
+build() {
+	cd libpciaccess-$version
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+}

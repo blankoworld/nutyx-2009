@@ -1,0 +1,18 @@
+# Description: demon GPSes
+# URL: http://gpsd.berlios.de
+# Packager: thierryn1 at hispeed dot ch
+# Maintainer: NuTyX core team
+# Depends on: dbus, libpthread-stubs, lesstif, python
+
+name=gpsd
+version=2.38
+release=1
+source=(http://download.berlios.de/$name/$name-$version.tar.gz)
+
+build() {
+		cd $name-$version
+                ./configure --prefix=/usr
+		make -j3
+		make DESTDIR=$PKG install
+}
+

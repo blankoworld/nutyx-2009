@@ -1,0 +1,19 @@
+# Description: Create an index of scalable X font files
+# URL: http://xorg.freedesktop.org
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: xorg-libx11, xorg-libfontenc, freetype
+
+name=xorg-mkfontscale
+version=1.0.6
+release=1
+source=(http://xorg.freedesktop.org/releases/individual/app/mkfontscale-$version.tar.bz2)
+
+build() {
+	cd mkfontscale-$version
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+}

@@ -1,0 +1,19 @@
+# Description: codec video temps réel
+# URL: http://gitorious.org/projects/capseo/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: mesa3d
+
+name=capseo
+version=0.3
+release=1
+source=(http://kiao.no-ip.info/NuTyX/files/$name-$version.tar.gz)
+
+build() {
+
+./autogen.sh
+./configure --prefix=/usr
+make -j3
+make DESTDIR=$PKG install
+}
+

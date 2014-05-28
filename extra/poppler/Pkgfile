@@ -1,0 +1,26 @@
+# Description: Contient une librairie pour le rendu des fichiers pdf
+# URL: http://poppler.freedesktop.org/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: fontconfig, libjpeg, cairo, libxml2, openjpeg
+
+name=poppler
+version=0.12.2
+release=1
+source=(http://poppler.freedesktop.org/$name-$version.tar.gz \
+	http://poppler.freedesktop.org/poppler-data-0.1.tar.gz)
+
+build() {
+cd $name-$version
+./configure --prefix=/usr --sysconfdir=/etc \
+              --localstatedir=/var --disable-static \
+	      --enable-cairo-output \
+	      --enable-xpdf-headers \
+	      --enable-libjpeg --enable-zlib \
+	      --disable-poppler-qt4 \
+	      --disable-poppler-glib \
+	      --disable-poppler-qt \
+	      --disable-gtk-test	
+make
+make prefix=$PKG/usr install
+}

@@ -1,0 +1,16 @@
+# Description: Lance des commandes dans un environnement root virtuel
+# URL:         http://fakeroot.alioth.debian.org/
+# Packager:  Juergen Daubert <juergen dot daubert at t-online dot de>
+# Maintainer: Olivier DOSSMANN <blankoworld at wanadoo dot com>
+
+name=fakeroot
+version=1.14.4
+release=1
+source=(http://ftp.debian.org/debian/pool/main/f/$name/${name}_$version.orig.tar.bz2)
+
+build () {
+    cd $name-$version
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG install
+}

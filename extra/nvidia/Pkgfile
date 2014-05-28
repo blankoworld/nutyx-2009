@@ -1,0 +1,53 @@
+# Description: Pilotes pour les cartes graphiques NVIDIA
+# URL: http://www.nvidia.com/object/unix.html
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on:
+
+name=nvidia
+version=190.53
+release=1
+[ "`uname -m`" == "i686"   ] && _ARCH=x86
+[ "`uname -m`" == "x86_64"   ] && _ARCH=x86_64
+source=(http://us.download.nvidia.com/XFree86/Linux-${_ARCH}/$version/NVIDIA-Linux-${_ARCH}-$version-pkg0.run\
+	$name-makefile.patch)
+
+build() {
+	sh NVIDIA-Linux-${_ARCH}-$version-pkg0.run --extract-only
+	cd NVIDIA-Linux-${_ARCH}-$version-pkg0
+
+	patch -p0 -i $SRC/$name-makefile.patch usr/src/nv/Makefile.kbuild
+
+
+	mkdir -p $PKG/usr/lib \
+		$PKG/usr/lib/xorg/modules/drivers \
+		$PKG/usr/lib/xorg/modules/extensions \
+		$PKG/usr/bin $PKG/usr/man/man1
+
+	cp -a usr/X11R6/lib/* $PKG/usr/lib/xorg/
+	cp -a usr/lib/* $PKG/usr/lib/
+	sed -i -e 's|__LIBGL_PATH__|/usr/lib|' $PKG/usr/lib/libGL.la
+	ln -sf libGLcore.so.$version $PKG/usr/lib/libGLcore.so
+	ln -sf /usr/lib/libGLcore.so $PKG/usr/lib/xorg/modules/extensions/libGLcore.so
+	ln -sv /usr/lib/xorg/modules/extensions/libglx.so.$version \
+	$PKG//usr/lib/xorg/modules/extensions/libglx.so
+	# copy includes
+	mkdir -p $PKG/usr/include/nvidia
+	cp -r usr/include/GL $PKG/usr/include/nvidia/
+
+
+	# install xconfig/settings programs and manpages
+#	install -m 0755 usr/bin/nvidia-{xconfig,settings} $PKG/usr/bin/
+#	install -m 0644 usr/share/man/man1/nvidia-{xconfig,settings}.1.gz \
+#		$PKG/usr/man/man1/
+
+	# build the module
+	cd usr/src/nv
+	ln -s Makefile{.kbuild,}
+	IGNORE_CC_MISMATCH=1 make module
+
+	# install it
+	install -m 0644 -D nvidia.ko \
+		$PKG/lib/modules/`uname -r`/extra/nvidia.ko
+
+}

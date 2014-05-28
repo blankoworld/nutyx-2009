@@ -1,0 +1,44 @@
+# Description: Contient l'environnement de developpement Sun's Java
+# URL: http://java.sun.com/javase/downloads/index.jsp
+# Maintainer: NuTyX coreteam
+# Packager: thierryn1 at hispeed dot ch
+# Depends on:
+
+name=jdk
+version=6u16
+release=1
+[ "`uname -m`" == "i686"   ] && _ARCH=i586
+[ "`uname -m`" == "x86_64"   ] && _ARCH=amd64
+
+source=(http://download.java.net/dlj/binaries/$name-$version-dlj-linux-${_ARCH}.bin \
+        jdk.sh https://jdk-distros.dev.java.net/source/browse/*checkout*/jdk-distros/trunk/utils/construct.sh )
+
+build() {
+	mkdir -p $PKG/etc/profile.d/
+	mkdir -p $PKG/opt
+	mv jdk.sh $PKG/etc/profile.d/
+	chmod 755 $name-$version-dlj-linux-${_ARCH}.bin
+	mkdir unbundle-jdk
+	cd unbundle-jdk
+       	sh ../jdk-${version}-dlj-linux-${_ARCH}.bin --accept-license
+	cd ..
+	
+	sh construct.sh unbundle-jdk linux-jdk linux-jre
+	mv linux-jdk $PKG/opt/jdk
+	mkdir -p $PKG/usr/share/
+	mv $PKG/opt/jdk/man \
+	$PKG/usr/share/
+#	mv $PKG/opt/jdk/jre/man \
+#	$PKG/usr/share/
+	rm -r $PKG/opt/jdk/demo
+	rm -r $PKG/opt/jdk/sample
+	rm -r $PKG/opt/jdk/db/demo
+	rm -r $PKG/opt/jdk/db/docs
+	rm -r $PKG/opt/jdk/db/javadoc
+	rm -r $PKG/opt/jdk/jre/man/ja_JP.eucJP
+	rm $PKG/opt/jdk/jre/man/ja
+	mv $PKG/opt/jdk/jre/man/man1/* \
+	$PKG/usr/share/man/man1/
+	rm -r $PKG/opt/jdk/jre/man
+	rm -r $PKG/usr/share/man/ja*
+}

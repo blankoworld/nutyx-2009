@@ -1,0 +1,593 @@
+--- GCAllocine.pm.bak	2009-12-21 23:34:52.000000000 +0100
++++ GCAllocine.pm	2009-12-21 23:35:21.000000000 +0100
+@@ -39,10 +39,9 @@
+ 
+         if ($self->{parsingList})
+         {
+-            if ($tagname eq "a")
++            if ($self->{insideResults} eq 1)       
+             {
+-
+-                if (($attr->{href} =~ /^\/film\/fichefilm_gen_cfilm=/) && ($self->{inside}->{h4}))
++                if (($tagname eq "a") && ($attr->{href} =~ /^\/film\/fichefilm_gen_cfilm=/) && ($self->{isMovie} eq 0))
+                 {
+                     my $url = $attr->{href};
+                     $self->{isMovie} = 1;
+@@ -50,79 +49,114 @@
+                     $self->{itemIdx}++;
+                     $self->{itemsList}[$self->{itemIdx}]->{url} = $url;
+                 }
++                elsif (($tagname eq "td") && ($self->{isMovie} eq 1))
++                {
++                    $self->{isMovie} = 2;       
++                }
++                elsif (($tagname eq "a") && ($self->{isMovie} eq 2))
++                {
++                    $self->{isMovie} = 3;
++                }
++                elsif (($tagname eq "br") && ($self->{isMovie} eq 3))
++                {
++                    $self->{itemsList}[$self->{itemIdx}]->{title} =~ s/^\s*//;
++                    $self->{itemsList}[$self->{itemIdx}]->{title} =~ s/\s*$//; 
++                    $self->{itemsList}[$self->{itemIdx}]->{title} =~ s/\s+/ /g;                 
++                    $self->{isMovie} = 4;
++                }
++                elsif (($tagname eq "span") && ($attr->{class} eq "fs11") && ($self->{isMovie} eq 4))   
++                {
++                    $self->{isInfo} = 1;
++                    $self->{isMovie} = 0;            
++                }
++                elsif (($tagname eq "br") && ($self->{isInfo} eq 1))
++                {
++                    $self->{isInfo} = 2;
++                }
++                elsif (($tagname eq "br") && ($self->{isInfo} eq 2))
++                {
++                    $self->{isInfo} = 3;
++                }            
+             }
+         }
+         else
+         {
+-            if ($tagname eq "h3")
++            if (($tagname eq "span") && ($attr->{class} eq "bold") && ($self->{insideDate} eq 1))
+             {
+-                $self->{insideActors} = 0;
+-                $self->{insideDirector} = 0;
+-                $self->{insideCast}=0;
+-                $self->{insideCastLine}=0;
+-                $self->{insideRole}=0;
+-                $self->{insideActor}=0;
+-                $self->{insideDate}=0;
+-                if ($attr->{style} =~ /color:\s*#D20000/)
+-                {
+-                    $self->{insideAge} = 1;
+-                }
+-                else
+-                {
+-                    $self->{insideAge} = 0;
+-                }
++                $self->{insideDate} = 2;
++            }
++            elsif (($tagname eq "a") && ($self->{insideDirector} eq 1))
++            {
++                $self->{insideDirector} = 2;
+             }
+-            elsif ($tagname eq "img")
++            elsif (($tagname eq "a") && ($self->{insideGenre} eq 1))
++            {
++                $self->{insideGenre} = 2;
++            }
++            elsif (($tagname eq "em") && ($self->{insideOriginal} eq 1))
++            {
++                $self->{insideOriginal} = 2;
++            }
++            elsif (($tagname eq "a") && ($self->{insideCountry} eq 1))
++            {
++                $self->{insideCountry} = 2;
++            }
++            elsif (($tagname eq "div") && ($attr->{class} eq "poster"))
++            {
++                $self->{insidePicture} = 1;
++            }    
++            elsif (($tagname eq "img") && ($self->{insidePicture} == 1))
+             {
+                 my $src = $attr->{src};
+-                if($self->{insidePressRating} == 1 && $attr->{class}=~/etoile_(\d)/){
+-                    $self->{curInfo}->{ratingpress}=2+2*$1;
+-                    $self->{insidePressRating} = 0;
+-                }
+-                elsif (!$self->{curInfo}->{image})
++                if (!$self->{curInfo}->{image})
+                 {
+                     if ($src =~ /\/nmedia\//)
+                     {
+-                        if ($self->{bigPics})
++                        if (($self->{bigPics}) && ($src =~ /r_160_214/))
+                         {
+-                            my $pageUrl = $self->{loadedUrl};
+-                            $pageUrl =~ s/fichefilm_/galerievignette_/;
+-                            my $page = $self->loadPage($pageUrl, 0, 1);
+-                            $page =~ m/<img id='imgNormal' class='photo' src='(.*?)'/ms;
+-                            $src = $1 if $1;
++                            $src =~ s/r_160_214/r_760_x/g;
+                         }
+-                       $self->{curInfo}->{image} = $src;
++                        $self->{curInfo}->{image} = $src;
+                     }
+                     elsif ($src =~ /AffichetteAllocine\.gif/i)
+                     {
+                         $self->{curInfo}->{image} = "empty";
+                     }
+-               }
+-           }
+-           elsif (($tagname eq "table") && ($attr->{cast} eq "1"))
+-           {
+-               $self->{insideCast}=1;
+-           }
+-           elsif (($tagname eq "tr") && ($self->{insideCast}))
+-           {
+-               $self->{insideCastLine}=1;
+-           }
+-           elsif (($tagname eq "h5") && ($self->{insideCastLine}))
+-           {
+-               $self->{insideRole}=1;
+-           }
+-           elsif (($tagname eq "a") && ($self->{insideCastLine}))
+-           {
+-               $self->{insideRole}=0;
+-               $self->{insideActor}=1;
+-           }
+-           elsif ($tagname eq "br")
+-           {
+-               if ($self->{insideSynopsis})
+-               {
+-                   $self->{curInfo}->{synopsis} .= "\n";
+-               }
+-           }
++                }
++            }        
++            elsif ($tagname eq "actors")
++            {
++                $self->{insideActors} = 1;
++                $self->{insideCast} = 0;
++                $self->{insideActor} = 0;
++                $self->{insideRole} = 0;
++            }
++            elsif (($tagname eq "h2") && ($self->{insideActors}))
++            {
++                $self->{insideCast} = 1;
++            }
++            elsif (($tagname eq "a") && ($self->{insideCast} == 1))
++            {
++                $self->{insideActor} = 1;
++            }
++            elsif (($tagname eq "p") && ($self->{insideCast} == 1))
++            {
++                $self->{insideRole} = 1;
++            }
++            elsif (($tagname eq "table") && ($attr->{class} =~ /castingdata/) && ($self->{insideActors}))
++            {
++                # Alternate way the page lists cast
++                $self->{insideCast} = 2;
++            }
++            elsif (($tagname eq "td") && ($self->{insideCast} == 2))
++            {
++                $self->{insideRole} = 2;
++            }
++            elsif (($tagname eq "a") && ($self->{insideCast} == 3))
++            {
++                $self->{insideActor} = 2;
++            }
++
+         }
+     }
+ 
+@@ -131,28 +165,48 @@
+         my ($self, $tagname) = @_;
+         $self->{inside}->{$tagname}--;
+ 
+-        if ($tagname eq "h4")
++        if (($tagname eq "span") && ($self->{insideSynopsis} eq 1))
++        {
++            $self->{insideSynopsis} = 2;
++        }
++        elsif ($tagname eq "span")
++        {
++            $self->{insideDirector} = 0;
++            $self->{insidePressRating} = 0;
++        }
++        elsif ($tagname eq "div")
++        {
++            $self->{insidePicture} = 0;
++        }   
++        elsif ($tagname eq "table")
++        {
++            $self->{insideResults} = 0;
++        }   
++         
++        elsif ($tagname eq "actors")
++        {
++            $self->{insideActors} = 0;
++            $self->{insideCast} = 0;
++            $self->{insideActor} = 0;
++            $self->{insideRole} = 0;
++        }
++        elsif ((($tagname eq "div") || ($tagname eq "table")) && ($self->{insideCast}))
++        {
++            $self->{insideCast} = 0;
++        }
++        elsif (($tagname eq "tr") && ($self->{insideCast} > 1))
+         {
+-            $self->{insideSynopsis} = 0;
++            $self->{insideActor} = 0;
++            $self->{insideRole} = 0;        
++        }
++        elsif (($tagname eq "a") && ($self->{insideActor}))
++        {
++            $self->{insideActor} = 0;
++        }
++        elsif (($tagname eq "p") && ($self->{insideRole}))
++        {
++            $self->{insideRole} = 0;
+         }
+-       elsif (($tagname eq "td") && ($self->{isInfo}))
+-       {
+-           #work around bad date for last search result
+-           $self->{isInfo}=0;
+-       }
+-       elsif (($tagname eq "td") && ($self->{insideCastLine}))
+-       {
+-           $self->{insideRole}=0;
+-           $self->{insideActor}=0;
+-       }
+-       elsif (($tagname eq "tr") && ($self->{insideCastLine}))
+-       {
+-           $self->{insideCastLine}=0;
+-       }
+-       elsif (($tagname eq "table") && ($self->{insideCast}))
+-       {
+-           $self->{insideCast}=0;
+-       }
+     }
+ 
+     sub text
+@@ -161,137 +215,166 @@
+ 
+         if ($self->{parsingList})
+         {
+-            if ($self->{isMovie})
++            if ($origtext =~ m/dans les titres de films/)
+             {
+-                $self->{itemsList}[$self->{itemIdx}]->{title} = $origtext;
+-                $self->{isMovie} = 0;
+-                $self->{isInfo} = 1;
+-                return;
++                $self->{insideResults} = 1;                
+             }
+-            if ($self->{isInfo})
++            if ($self->{isMovie} eq 3)
+             {
+-                if ($self->{inside}->{h4})
++                $self->{itemsList}[$self->{itemIdx}]->{title} .= $origtext;
++            }
++            if ($self->{isInfo} eq 1)
++            {
++                if ( $origtext =~ /\s*([0-9]{4})/ )
+                 {
+-                    if ( $origtext =~ /([0-9]{4})/ )
+-                    {
+-                        $self->{itemsList}[$self->{itemIdx}]->{date} = $1;
+-                    }
++                    $self->{itemsList}[$self->{itemIdx}]->{date} = $1;
+                 }
+-                elsif ($self->{inside}->{h5})
++            }
++            elsif ($self->{isInfo} eq 2)
++            {
++                if ( $origtext =~ /^\s*de (.*)/ )
+                 {
+-                    if ( $origtext =~ /^de (.*)/ )
+-                    {
+-                        $self->{itemsList}[$self->{itemIdx}]->{director} = $1;
+-                    }
+-                    elsif (( $origtext =~ m/^avec (.*)/ ) && (!$self->{itemsList}[$self->{itemIdx}]->{actors}))
+-                    {
+-                        $self->{itemsList}[$self->{itemIdx}]->{actors} = $1;
+-                    }
++                    $self->{itemsList}[$self->{itemIdx}]->{director} = $1;
+                 }
+             }
++            elsif ($self->{isInfo} eq 3)
++            {
++                if (( $origtext =~ m/^\s*avec (.*)/ ) && (!$self->{itemsList}[$self->{itemIdx}]->{actors}))
++                {
++                    $self->{itemsList}[$self->{itemIdx}]->{actors} = $1;
++                }
++                $self->{isInfo} = 0;
++            }                        
+         }
+         else
+         {
+-            if (($self->{inside}->{h1}) && !($self->{inside}->{script}))
++            $origtext =~ s/[\r\n]//g;
++            $origtext =~ s/^\s*//;
++            $origtext =~ s/\s*$//;    
++            if (length($origtext) < 1)
+             {
+-                $origtext =~ s/[\r\n]//g;
+-                $self->{curInfo}->{title} = $origtext if length($origtext) > 2;
++                $self->{insideGenre} = 0;                            
++            }       
++            elsif (($self->{inside}->{h1}) && !($self->{inside}->{script}))
++            {
++                $self->{curInfo}->{title} = $origtext;
+             }
+-            if ($self->{inside}->{h2})
++            elsif (($self->{insideDate} eq 2) && (length($origtext) > 1))
+             {
+-                $self->{insideSynopsis} = 1 if $origtext =~ /Synopsis/;
++                $self->{curInfo}->{date} = $origtext;
++                $self->{insideDate} = 0;
+             }
+-            if ($self->{inside}->{h4}){
+-                if ($self->{insideActors})
+-                {
+-                    $self->{curInfo}->{synopsis} .= $origtext;
+-                }
+-                elsif ($self->{insideSynopsis})
+-                {
+-                    $self->{curInfo}->{synopsis} .= $origtext;
+-                }
+-                elsif ( $origtext =~ /^Saga /)
+-                {
+-                    $origtext =~ s/Saga //;
+-                    $self->{curInfo}->{serie}=$origtext;
+-                }
++            elsif (( $origtext =~ /^Date de sortie/ )
++                && ( !$self->{curInfo}->{date} ))
++            {
++                $self->{insideDate} = 1;
++            }
++            elsif (( $origtext =~ /^Date de reprise/ )
++                && ( !$self->{curInfo}->{date} ))
++            {
++                $self->{insideDate} = 1;
++            }
++            elsif ($self->{insideDirector} eq 2)
++            {
++                $origtext = ", " if $origtext =~ m/^,/;
++                $self->{curInfo}->{director} .= $origtext;
++            }
++            elsif ( $origtext =~ /^R.alis. par/ )
++            {
++                $self->{insideDirector} = 1;
++            }
++            elsif ($self->{insideOriginal} eq 2)
++            {
++                $self->{curInfo}->{original} = $origtext;
++                $self->{insideOriginal} = 0;                
++            }
++            elsif ( $origtext =~ /^Titre original/ )
++            {
++                $self->{insideOriginal} = 1;
++            }
++            elsif ( $origtext =~ m/^[\s\n]*Dur.e[\s\n]*:[\s\n]*(.*)Ann/ )
++            {          
++                $self->{insideGenre} = 0; 
++                $self->{curInfo}->{time} = $1;
++            }
++            elsif ($self->{insideGenre} eq 2)
++            {
++                $origtext = ";" if $origtext =~ m/^,/;
++                $self->{curInfo}->{genre} .= $origtext;
++            }
++            elsif ( $origtext =~ /^\.[\s\n]*Genre/ )
++            {
++                $self->{insideCountry} = 0;
++                $self->{insideGenre} = 1;
++            }
++            elsif ($self->{insideCountry} eq 2)
++            {
++                $origtext = ", " if $origtext =~ m/^,/;
++                $self->{curInfo}->{country} .= $origtext;
++            }
++            elsif ( $origtext =~ /^Long-m.trage/ )
++            {
++                $self->{insideCountry} = 1;
++            }
++            elsif ($self->{insideSynopsis} eq 2)
++            {
++                $self->{curInfo}->{synopsis} = $origtext;
++                $self->{insideSynopsis} = 0;
++            }
++            elsif (($origtext =~ /^Synopsis ./) && !($self->{curInfo}->{synopsis}))
++            {
++                $self->{insideSynopsis} = 1;
++            }
++            elsif ($origtext =~ /^Presse$/)
++            {
++                $self->{insidePressRating} = 1;
++            }
++            elsif (( $origtext =~ /^\((.*)\)/ ) && ($self->{insidePressRating} == 1))
++            {
++                my $rating = $1;
++                $rating =~ s/,/\./g;
++                $self->{curInfo}->{ratingpress} = ($rating / 4) * 10;
++                $self->{insidePressRating} = 0;
+             }
+-            elsif ($self->{inside}->{h3})
++            elsif ($self->{insideActor} == 1)
+             {
+-                if ($self->{insideActors})
++                # Actors from casting page
++                $self->{curInfo}->{actors}->[$self->{actorsCounter}]->[0]=$origtext
++                if ($self->{actorsCounter} <= $GCPlugins::GCfilms::GCfilmsCommon::MAX_ACTORS);
++                $self->{actorsCounter}++;
++            }
++            elsif ($self->{insideRole} == 1)
++            {
++                my $role = "";
++                # Roles from casting page              
++                if ($origtext =~ m/R.le : (.*)/)
+                 {
+-                    #Actors from fichefilm page
+-                    $self->{curInfo}->{actors} .= $origtext;
+-                    $self->{curInfo}->{actors} =~ s/^\s*//;
++                    $role = $1;
+                 }
+-                elsif ($self->{insideRole})
++                elsif ($origtext =~ m/R.le/)
+                 {
+-                    #Roles from casting page
+-                    push @{$self->{curInfo}->{actors}}, [$origtext,$origtext] 
+-                    if ($self->{actorsCounter} <= $GCPlugins::GCfilms::GCfilmsCommon::MAX_ACTORS);
++                    # Unknown / empty role
++                    $role = "";
+                 }
+-                elsif ($self->{insideActor})
+-                {
+-                    #Actors from casting page
+-                    $self->{curInfo}->{actors}->[$self->{actorsCounter}]->[0]=$origtext
++                # As we incremented it above, we have one more chance here to add a role
++                # Without <= we would skip the role for last actor
++                push @{$self->{curInfo}->{actors}->[$self->{actorsCounter} - 1]}, $role
+                     if ($self->{actorsCounter} <= $GCPlugins::GCfilms::GCfilmsCommon::MAX_ACTORS);
+-                    $self->{actorsCounter}++;
+-                }
+-                elsif ($self->{insideDirector})
+-                {
+-                    $self->{curInfo}->{director} .= $origtext;
+-                }
+-                elsif ($self->{insideAge})
+-                {
+-                    $origtext =~ s/.*?([0-9]+).*/$1/;
+-                    $self->{curInfo}->{age} = $origtext;
+-                }
+-                elsif ($self->{insideDate})
+-                {
+-                    $origtext =~ s/^[\s\n]*//;
+-                    $origtext =~ s/\s*$//;
+-                    $self->{curInfo}->{date} = $origtext;
+-                    $self->{insideDate}=0;
+-                }
+-                elsif (( $origtext =~ /^Date de sortie/ )
+-                    && ( !$self->{curInfo}->{date} ) )
+-                {
+-                    $self->{insideDate}=1;
+-                }
+-                elsif ( $origtext =~ /^Genre/ )
+-                {
+-                    $origtext =~ s/^Genre : //;
+-                    $origtext =~ s/, /,/g;
+-                    $self->{curInfo}->{genre} = $self->capWord($origtext);
+-                }
+-                elsif (( $origtext =~ /^Film / ) && (!$self->{curInfo}->{country}))
+-                {
+-                    $origtext =~ s/^Film //;
+-                    $self->{curInfo}->{country} = ucfirst $origtext;
+-                }
+-                elsif ( $origtext =~ /^Dur.e/ )
+-                {
+-                    $origtext =~ s/^Dur.e : (.*)?/$1/;
+-                    $self->{curInfo}->{time} = $origtext;
+-                }
+-                elsif ( $origtext =~ /^Titre original/ )
+-                {
+-                    $origtext =~ s/^Titre original : .*?/$1/;
+-                    $self->{curInfo}->{original} = $origtext;
+-                }
+-                elsif (($origtext =~ /^Avec/ ) && (! $self->{curInfo}->{actors}))
+-                {
+-                    #Detecting actors from fichefilm page
+-                    $self->{insideActors} = 1;
+-                }
+-                elsif ( $origtext =~ /^R.alis. par/ )
+-                {
+-                    $self->{insideDirector} = 1;
+-                }
+             }
+-            elsif ( $origtext =~ /^Presse$/ )
++            elsif ($self->{insideRole} == 2)
+             {
+-               $self->{insidePressRating} = 1;
++                # Role from casting page
++                $self->{role} = $origtext;
++                $self->{insideCast} = 3;
++                $self->{insideRole} = 0;
++            }
++            elsif ($self->{insideActor} == 2)
++            {
++                # Actor from casting page
++                push @{$self->{curInfo}->{actors}}, [$origtext,$self->{role}]
++                    if ($self->{actorsCounter} <= $GCPlugins::GCfilms::GCfilmsCommon::MAX_ACTORS);
++                $self->{actorsCounter}++;
++                $self->{insideActor} = 0;
+             }
+         }
+     }
+@@ -311,6 +394,7 @@
+ 
+         $self->{isInfo} = 0;
+         $self->{isMovie} = 0;
++        $self->{insideResults} = 0;
+         $self->{curName} = undef;
+         $self->{curUrl} = undef;
+         $self->{actorsCounter}=0;
+@@ -331,14 +415,17 @@
+ 
+         if (!$self->{parsingList})
+         {
+-            #Remplacing actor list with cast page list
++            # Get cast page list
+             my $pageUrl = $self->{loadedUrl};
+             $pageUrl =~ s/fichefilm_/casting_/;
++            
+             my $page = $self->loadPage($pageUrl, 0, 1);
+-            if($page =~ m|<h2[^>]*>Acteurs</h2><hr /></td></tr>(.*?)</table>|ms)
++            # Grab the actors section, place it in the fetched html. Not the nicest way of grabbing
++            # this section, since we end up with mismatched tags, but it works     
++            if ($page =~ m/<a class=.anchor. id=.actors.>(.*?)<a class=.anchor. id=.production.><\/a>/s)
+             {
+-                my $src = $1;
+-                $html =~ s|Avec.*Plus\.\.\.</a>|<table cast=1>$src</table>|i;
++                my $src = "<actors>$1</actors></body>";
++                $html =~ s/<\/body>/$src/;
+             }
+         }
+         
+@@ -348,8 +435,32 @@
+     sub getSearchUrl
+     {
+         my ($self, $word) = @_;
+-	
+-        return "http://www.allocine.fr/recherche/?motcle=$word&f=3&rub=1";
++        
++        # For some reason, allocine does not like properly encoded accent characters
++        # so we have to strip out all the accents before searching
++        my $decodedWord = $word;
++        # First, decode the search term, since it's already been url encoded
++        $decodedWord =~ s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
++        # Then replace accented characters
++        $decodedWord = replaceAccents($decodedWord);
++         
++        return "http://www.allocine.fr/recherche/?q=$decodedWord&f=3&rub=1";
++    }
++    
++    require Encode;
++    use Unicode::Normalize;
++    # Strip out accents from a string and replace them with the non-accented character
++    sub replaceAccents
++    {
++        my $string = shift;
++        
++        # Decompose string
++        $string = NFD( $string );
++        # Get rid off all the unwanted characters
++        $string =~ s/\pM//g;
++        $string =~ s/[^\0-\x80]//g;
++        
++        return $string;
+     }
+     
+     sub getItemUrl

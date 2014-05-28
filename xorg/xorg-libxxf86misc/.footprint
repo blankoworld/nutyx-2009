@@ -1,0 +1,12 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/lib/
+-rw-r--r--	root/root	usr/lib/libXxf86misc.a
+-rwxr-xr-x	root/root	usr/lib/libXxf86misc.la
+lrwxrwxrwx	root/root	usr/lib/libXxf86misc.so -> libXxf86misc.so.1.1.0
+lrwxrwxrwx	root/root	usr/lib/libXxf86misc.so.1 -> libXxf86misc.so.1.1.0
+-rwxr-xr-x	root/root	usr/lib/libXxf86misc.so.1.1.0
+drwxr-xr-x	root/root	usr/lib/pkgconfig/
+-rw-r--r--	root/root	usr/lib/pkgconfig/xxf86misc.pc
+drwxr-xr-x	root/root	usr/share/
+drwxr-xr-x	root/root	usr/share/man/
+drwxr-xr-x	root/root	usr/share/man/man3/

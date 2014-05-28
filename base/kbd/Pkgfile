@@ -1,0 +1,24 @@
+# Description: Contient table des touches clavier et utilitaire pour clavier
+# URL: ftp://devel.altlinux.org/legion/kbd/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on:
+
+name=kbd
+version=1.15.1
+release=1
+source=(http://ftp.altlinux.com/pub/people/legion/kbd/kbd-$version.tar.gz \
+http://www.linuxfromscratch.org/patches/lfs/development/kbd-$version-backspace-1.patch \
+	)
+build() {
+cd $name-$version
+autoreconf
+patch -Np1 -i ../kbd-$version-backspace-1.patch
+./configure --prefix=/usr \
+	--mandir=/usr/share/man \
+	--datadir=/lib/kbd
+make
+make DESTDIR=$PKG install
+mkdir -p $PKG/bin
+mv -v $PKG/usr/bin/{kbd_mode,openvt,setfont} $PKG/bin/ 
+}

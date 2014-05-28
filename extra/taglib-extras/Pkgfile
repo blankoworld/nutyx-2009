@@ -1,0 +1,20 @@
+# Description: Librairie necessaire a amarok 2.1
+# URL: http://developer.kde.org/~wheeler/taglib.html
+# Maintainer: NuTyX packager team
+# Packager: lesibel at free dot fr
+# Depends on: taglib
+
+name=taglib-extras
+version=1.0.1
+release=1
+
+source=(http://www.kollide.net/~jefferai/$name-$version.tar.gz)
+
+build() {
+  cd $name-$version
+  cmake -DCMAKE_INSTALL_PREFIX=/usr
+  make 
+  make DESTDIR=$PKG install
+
+}
+

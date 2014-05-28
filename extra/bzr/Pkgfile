@@ -1,0 +1,18 @@
+# Description: Gestionnaire de versionnement
+# URL: http://bazaar.canonical.com/en/
+# Packager: Blankoworld <blankoworld at wanadoo dot fr>
+# Depends on: python openssh
+
+name=bzr
+version=2.0.2
+release=1
+_version=2.0
+source=( http://launchpad.net/$name/${_version}/$version/+download/$name-$version.tar.gz )
+
+build() {
+
+  cd $SRC/$name-$version
+  python setup.py build install --root=$PKG
+
+}
+

@@ -1,0 +1,23 @@
+# Description: Panel lxde
+# URL: http://lxde.org/
+# Maintainer:geanbrun
+# Maintainer: NuTyX core team
+# Packager: geantbrun at gmail dot com
+# Depends on: gtk, menu-cache
+
+name=lxpanel
+version=0.5.4.1
+release=1
+
+source=(http://downloads.sourceforge.net/lxde/files/$name-$version.tar.gz\
+	volume.png)
+
+
+build() {
+cd $name-$version
+./configure --prefix=/usr
+make
+make DESTDIR=$PKG install
+install -D -m644 ../volume.png \
+        $PKG/usr/share/lxpanel/images/volume.png
+}

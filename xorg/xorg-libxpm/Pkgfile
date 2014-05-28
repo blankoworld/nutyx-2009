@@ -1,0 +1,19 @@
+# Description: xorg lib libXpm
+# URL: http://xorg.freedesktop.org
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: xorg-xproto, xorg-libx11, xorg-libxt, xorg-xextproto, xorg-libxext
+
+name=xorg-libxpm
+version=3.5.8
+release=1
+source=(http://xorg.freedesktop.org/releases/individual/lib/libXpm-$version.tar.bz2)
+
+build() {
+	cd libXpm-$version
+
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+}

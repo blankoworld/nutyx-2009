@@ -1,0 +1,20 @@
+# Description: imake build system
+# URL: http://xorg.freedesktop.org
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: xorg-xproto, xorg-cf-files
+
+name=xorg-imake
+version=1.0.2
+release=2
+source=(http://xorg.freedesktop.org/releases/individual/util/imake-$version.tar.bz2)
+
+build() {
+	cd imake-$version
+
+	./configure --prefix=/usr \
+		--mandir=/usr/share/man
+
+	make
+	make DESTDIR=$PKG install
+}

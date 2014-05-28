@@ -1,0 +1,21 @@
+# Description: Librairie graphique pour le mode Frame buffer
+# URL: http://www.directfb.org
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: libjpeg , xorg-libx11, mesa3d, libvncserver
+
+name=directfb
+version=1.4.1
+release=1
+source=(ftp://ftp.debian.org/debian/pool/main/d/directfb/directfb_1.4.1.orig.tar.gz)
+
+# To build with multicore add --enable-multi
+build() {
+	cd $name-$version
+	./configure --prefix=/usr \
+		--mandir=/usr/share/man \
+		--enable-zlib \
+		--infodir=/usr/share/info
+	make
+	make DESTDIR=$PKG install
+}

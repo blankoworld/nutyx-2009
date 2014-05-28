@@ -1,0 +1,19 @@
+# Description: desktop menus for LXDE
+# URL:         http://lxde.org/
+# Maintainer:  Bartlomiej Palmowski, maks1k at wp dot pl
+# Packager: thierryn1 at hispeed dot ch
+# Depends on:  intltool
+
+name=lxmenu-data
+version=0.1.1
+release=1
+source=(http://downloads.sourceforge.net/lxde/$name-$version.tar.gz)
+
+build() {
+    cd $name-$version
+    ./configure --prefix=/usr \
+	--sysconfdir=/etc
+    make
+    make DESTDIR=$PKG install
+}
+

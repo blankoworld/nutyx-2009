@@ -1,0 +1,5 @@
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/lib/
+drwxr-xr-x	root/root	usr/lib/X11/
+drwxr-xr-x	root/root	usr/lib/X11/app-defaults/
+-rwxr-xr-x	root/root	usr/lib/X11/app-defaults/URxvt

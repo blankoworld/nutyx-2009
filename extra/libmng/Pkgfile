@@ -1,0 +1,21 @@
+# Description: Permet de lire et écrire des fichiers Multiple-image Network Graphics (mng)
+# URL: http://sourceforge.net/projects/libmng/
+# Maintainer: NuTyX core team
+# Packager: thierryn1 at hispeed dot ch
+# Depends on: lcms
+
+name=libmng
+version=1.0.10
+release=1
+source=( http://downloads.sourceforge.net/$name/$name-$version.tar.gz)
+
+
+build() {
+	cd $name-$version
+	ln -s makefiles/configure.in .
+	ln -s makefiles/Makefile.am .
+	autoreconf --force --install
+	./configure --prefix=/usr
+	make
+	make DESTDIR=$PKG install
+}
